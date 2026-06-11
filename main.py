@@ -1,7 +1,9 @@
 def turnLeft():
+    maqueen.motor_stop(maqueen.Motors.ALL)
+    basic.pause(200)
     maqueen.motor_run(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
     maqueen.motor_run(maqueen.Motors.M2, maqueen.Dir.CW, 20)
-    basic.pause(1100)
+    basic.pause(1000)
     maqueen.motor_stop(maqueen.Motors.ALL)
 
 def on_button_pressed_a():
@@ -20,9 +22,11 @@ def trackLine():
         maqueen.motor_run(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
         maqueen.motor_run(maqueen.Motors.M2, maqueen.Dir.CW, 20)
 def turnRight():
+    maqueen.motor_stop(maqueen.Motors.ALL)
+    basic.pause(200)
     maqueen.motor_run(maqueen.Motors.M2, maqueen.Dir.CW, 20)
     maqueen.motor_run(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
-    basic.pause(1100)
+    basic.pause(1000)
     maqueen.motor_stop(maqueen.Motors.ALL)
 
 def on_button_pressed_b():
@@ -40,11 +44,17 @@ def on_forever():
     if state2 == 1:
         trackLine()
         if maqueen.read_patrol(maqueen.Patrol.PATROL_LEFT) == 0 and maqueen.read_patrol(maqueen.Patrol.PATROL_RIGHT) == 0:
+            maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
+            basic.pause(200)
             turnLeft()
             if maqueen.ultrasonic() < 12:
+                maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
+                basic.pause(200)
                 turnRight()
                 state2 = 2
             else:
+                maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
+                basic.pause(200)
                 state2 = 3
     elif state2 == 2:
         trackLine()

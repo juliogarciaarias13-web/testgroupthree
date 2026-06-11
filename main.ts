@@ -3,7 +3,7 @@ function turnLeft () {
     basic.pause(200)
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
     maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
-    basic.pause(1100)
+    basic.pause(1000)
     maqueen.motorStop(maqueen.Motors.All)
 }
 input.onButtonPressed(Button.A, function () {
@@ -26,13 +26,14 @@ function turnRight () {
     basic.pause(200)
     maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
-    basic.pause(1100)
+    basic.pause(1000)
     maqueen.motorStop(maqueen.Motors.All)
 }
 input.onButtonPressed(Button.B, function () {
     basic.showIcon(IconNames.No)
     state2 = 0
 })
+let strip: neopixel.Strip = null
 let state2 = 0
 basic.showIcon(IconNames.Yes)
 state2 = 0
@@ -90,6 +91,8 @@ basic.forever(function () {
             maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
             basic.pause(200)
             state2 = 7
+            strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
+            strip.showColor(neopixel.colors(NeoPixelColors.Green))
         }
     } else if (state2 == 7) {
         trackLine()
