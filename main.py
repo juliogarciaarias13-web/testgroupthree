@@ -35,21 +35,22 @@ def on_button_pressed_b():
     state2 = 0
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
+strip: neopixel.Strip = None
 state2 = 0
 basic.show_icon(IconNames.YES)
 state2 = 0
 
 def on_forever():
-    global state2
+    global state2, strip
     if state2 == 1:
         trackLine()
         if maqueen.read_patrol(maqueen.Patrol.PATROL_LEFT) == 0 and maqueen.read_patrol(maqueen.Patrol.PATROL_RIGHT) == 0:
             maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
-            basic.pause(200)
+            basic.pause(100)
             turnLeft()
             if maqueen.ultrasonic() < 12:
                 maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
-                basic.pause(200)
+                basic.pause(100)
                 turnRight()
                 state2 = 2
             else:
@@ -68,6 +69,8 @@ def on_forever():
     elif state2 == 3:
         trackLine()
         if maqueen.read_patrol(maqueen.Patrol.PATROL_LEFT) == 0 and maqueen.read_patrol(maqueen.Patrol.PATROL_RIGHT) == 0:
+            maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
+            basic.pause(100)
             turnLeft()
             state2 = 7
     elif state2 == 4:
@@ -85,11 +88,14 @@ def on_forever():
         trackLine()
         if maqueen.read_patrol(maqueen.Patrol.PATROL_LEFT) == 0 and maqueen.read_patrol(maqueen.Patrol.PATROL_RIGHT) == 0:
             maqueen.motor_run(maqueen.Motors.ALL, maqueen.Dir.CW, 32)
-            basic.pause(200)
+            basic.pause(300)
             state2 = 7
+            strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
+            strip.show_color(neopixel.colors(NeoPixelColors.GREEN))
     elif state2 == 7:
         trackLine()
         if maqueen.read_patrol(maqueen.Patrol.PATROL_LEFT) == 0 and maqueen.read_patrol(maqueen.Patrol.PATROL_RIGHT) == 0:
+            basic.pause(300)
             turnRight()
             state2 = 8
     elif state2 == 8:

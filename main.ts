@@ -24,8 +24,8 @@ function trackLine () {
 function turnRight () {
     maqueen.motorStop(maqueen.Motors.All)
     basic.pause(200)
-    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
-    maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
+    maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 20)
+    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, 20)
     basic.pause(1000)
     maqueen.motorStop(maqueen.Motors.All)
 }
@@ -42,11 +42,11 @@ basic.forever(function () {
         trackLine()
         if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
             maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
-            basic.pause(200)
+            basic.pause(100)
             turnLeft()
             if (maqueen.Ultrasonic() < 12) {
                 maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
-                basic.pause(200)
+                basic.pause(100)
                 turnRight()
                 state2 = 2
             } else {
@@ -69,6 +69,8 @@ basic.forever(function () {
     } else if (state2 == 3) {
         trackLine()
         if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
+            basic.pause(100)
             turnLeft()
             state2 = 7
         }
@@ -89,7 +91,7 @@ basic.forever(function () {
         trackLine()
         if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
             maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
-            basic.pause(200)
+            basic.pause(250)
             state2 = 7
             strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
             strip.showColor(neopixel.colors(NeoPixelColors.Green))
@@ -97,6 +99,7 @@ basic.forever(function () {
     } else if (state2 == 7) {
         trackLine()
         if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            basic.pause(250)
             turnRight()
             state2 = 8
         }
