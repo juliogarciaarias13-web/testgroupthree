@@ -1,4 +1,6 @@
 function turnLeft () {
+    maqueen.motorStop(maqueen.Motors.All)
+    basic.pause(200)
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
     maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
     basic.pause(1100)
@@ -20,6 +22,8 @@ function trackLine () {
     }
 }
 function turnRight () {
+    maqueen.motorStop(maqueen.Motors.All)
+    basic.pause(200)
     maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 20)
     basic.pause(1100)
@@ -36,11 +40,17 @@ basic.forever(function () {
     if (state2 == 1) {
         trackLine()
         if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
+            basic.pause(200)
             turnLeft()
             if (maqueen.Ultrasonic() < 12) {
+                maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
+                basic.pause(200)
                 turnRight()
                 state2 = 2
             } else {
+                maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 32)
+                basic.pause(200)
                 state2 = 3
             }
         }
